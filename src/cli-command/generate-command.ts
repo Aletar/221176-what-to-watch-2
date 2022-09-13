@@ -1,8 +1,8 @@
 import got from 'got';
-import { appendFile } from 'fs/promises';
 import { MockData } from '../types/mock-data.type.js';
 import { CliCommandInterface } from './cli-command.interface.js';
 import FilmGenerator from '../common/film-generator/film-generator.js';
+import TSVFileWriter from '../common/file-writer/tsv-file-writer.js';
 
 export default class GenerateCommand implements CliCommandInterface {
   public readonly name = '--generate';
@@ -19,9 +19,10 @@ export default class GenerateCommand implements CliCommandInterface {
     }
 
     const filmGenerator = new FilmGenerator(this.initialData);
+    const tsvFileWriter = new TSVFileWriter(filepath);
 
     for (let i = 0; i < filmsCount; i++) {
-      await appendFile(filepath, `${filmGenerator.generate()}\n`, 'utf8');
+      await tsvFileWriter.write(filmGenerator.generate());
     }
 
     console.log(`File ${filepath} was created!`);

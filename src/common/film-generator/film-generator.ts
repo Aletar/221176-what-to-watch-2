@@ -33,7 +33,7 @@ export default class FilmGenerator implements FilmGeneratorInterface {
     for (let i = 0; i < commentsCount; i++) {
       ratingScores.push(random(1, 10));
     }
-    const rating = sum(ratingScores) / commentsCount;
+    const rating = parseFloat((sum(ratingScores) / commentsCount).toFixed(1));
     const videoPreview = draw(this.mockData.videoPreviews);
 
     const starringArray = [];
