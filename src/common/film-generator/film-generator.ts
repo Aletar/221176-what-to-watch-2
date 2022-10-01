@@ -50,14 +50,13 @@ export default class FilmGenerator implements FilmGeneratorInterface {
     const name = `${draw(this.mockData.names)} ${draw(this.mockData.lastNames)}`;
     const email = draw(this.mockData.emails);
     const avatar = draw(this.mockData.avatars);
-    const password = uid(8);
 
     return [
       title, description, postDate, genre, year,
       rating, videoPreview, starring, director,
       runTime, commentsCount, posterImage,
       backgroundImage, backgroundColor,
-      name, email, avatar, password
+      name, email, avatar
     ].join('\t');
   }
 }

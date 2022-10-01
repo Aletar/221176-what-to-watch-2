@@ -9,7 +9,7 @@ export type Film = {
   year: number;
   rating: number;
   videoPreview: string;
-  starring: string[],
+  starring: string[];
   director: string;
   runTime: number;
   commentsCount: number;
