@@ -25,6 +25,7 @@ export default class Application {
 
   public initRoutes() {
     this.expressApp.use('/films', this.filmController.router);
+    this.expressApp.use('/users', this.userController.router);
   }
 
   public initMiddleware() {

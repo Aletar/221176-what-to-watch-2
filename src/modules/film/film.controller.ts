@@ -5,7 +5,7 @@ import {Component} from '../../types/component.types.js';
 import {LoggerInterface} from '../../common/logger/logger.interface.js';
 import {HttpMethod} from '../../types/http-method.enum.js';
 import {FilmServiceInterface} from './film-service.interface.js';
-import FilmResponse from './film.response.js';
+import FilmResponse from './response/film.response.js';
 import {fillDTO} from '../../utils/common.js';
 import CreateFilmDto from './dto/create-film.dto.js';
 
