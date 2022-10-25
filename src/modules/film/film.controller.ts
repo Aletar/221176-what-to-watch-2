@@ -8,6 +8,7 @@ import {FilmServiceInterface} from './film-service.interface.js';
 import FilmResponse from './response/film.response.js';
 import {fillDTO} from '../../utils/common.js';
 import CreateFilmDto from './dto/create-film.dto.js';
+import { ValidateDtoMiddleware } from '../../common/middlewares/validate-dto.middleware.js';
 
 @injectable()
 export default class FilmController extends Controller {
@@ -20,7 +21,12 @@ export default class FilmController extends Controller {
     this.logger.info('Register routes for FilmController…');
 
     this.addRoute({path: '/', method: HttpMethod.Get, handler: this.index});
-    this.addRoute({path: '/', method: HttpMethod.Post, handler: this.create});
+    this.addRoute({
+      path: '/',
+      method: HttpMethod.Post,
+      handler: this.create,
+      middlewares: [new ValidateDtoMiddleware(CreateFilmDto)]
+    });
   }
 
   public async index(_req: Request, res: Response): Promise<void> {
