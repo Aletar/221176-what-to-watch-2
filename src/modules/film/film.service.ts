@@ -68,4 +68,9 @@ export default class FilmService implements FilmServiceInterface {
       .findByIdAndUpdate(filmId, {rating: rating}).exec();
   }
 
+  public async exist(filmId: string): Promise<DocumentType<FilmEntity> | null> {
+    return this.filmModel
+      .findById(filmId).exec();
+  }
+
 }

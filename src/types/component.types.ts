@@ -5,11 +5,12 @@ export const Component = {
   DatabaseInterface: Symbol.for('DatabaseInterface'),
   UserServiceInterface: Symbol.for('UserServiceInterface'),
   UserModel: Symbol.for('UserModel'),
+  UserController: Symbol.for('UserController'),
   FilmServiceInterface: Symbol.for('FilmServiceInterface'),
   FilmModel: Symbol.for('FilmModel'),
+  FilmController: Symbol.for('FilmController'),
   CommentServiceInterface: Symbol.for('CommentServiceInterface'),
   CommentModel: Symbol.for('CommentModel'),
-  FilmController: Symbol.for('FilmController'),
-  ExceptionFilterInterface: Symbol.for('ExceptionFilterInterface'),
-  UserController: Symbol.for('UserController')
+  CommentController: Symbol.for('CommentController'),
+  ExceptionFilterInterface: Symbol.for('ExceptionFilterInterface')
 } as const;

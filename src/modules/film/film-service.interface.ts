@@ -13,4 +13,5 @@ export interface FilmServiceInterface {
   findById(filmId: string): Promise<DocumentType<FilmEntity> | null>;
   incCommentCount(filmId: string): Promise<DocumentType<FilmEntity> | null>;
   updateRating(filmId: string, rating: number): Promise<DocumentType<FilmEntity> | null>;
+  exist(filmId: string): Promise<DocumentType<FilmEntity> | null>;
 }
