@@ -154,8 +154,8 @@ paths:
       tags:
         - films
       operationId: setToWatchStatus
-      summary: Получение данных фильма
-      description: Получение детальной информации по фильму
+      summary: Добавить/удалить фильм к просмотру
+      description: Добавление/удаление фильма к просмотру
       parameters:
         - in: path
           name: filmId

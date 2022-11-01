@@ -19,9 +19,6 @@ export class FilmEntity extends defaultClasses.TimeStamps {
   @prop({trim: true})
   public description!: string;
 
-  @prop()
-  public postDate!: Date;
-
   @prop({
     type: () => String,
     enum: FilmGenre
@@ -31,11 +28,11 @@ export class FilmEntity extends defaultClasses.TimeStamps {
   @prop()
   public year!: number;
 
-  @prop({default: 0})
-  public rating!: number;
-
   @prop()
   public videoPreview!: string;
+
+  @prop()
+  public video!: string;
 
   @prop({
     required: true,
@@ -48,9 +45,6 @@ export class FilmEntity extends defaultClasses.TimeStamps {
 
   @prop()
   public runTime!: number;
-
-  @prop({default: 0})
-  public commentCount!: number;
 
   @prop()
   public posterImage!: string;
@@ -66,6 +60,23 @@ export class FilmEntity extends defaultClasses.TimeStamps {
     required: true
   })
   public userId!: Ref<UserEntity>;
+
+  @prop({default: 0})
+  public commentCount!: number;
+
+  @prop({default: 0})
+  public ratingSum!: number;
+
+  @prop({default: 0})
+  public rating!: number;
+
+  @prop({
+    ref: UserEntity,
+    required: false,
+    default: [],
+    _id: false
+  })
+  public usersToWatch!: Ref<UserEntity>[];
 }
 
 export const FilmModel = getModelForClass(FilmEntity);

@@ -35,6 +35,13 @@ export default class FilmService implements FilmServiceInterface {
       .exec();
   }
 
+  public async findFirst(): Promise<DocumentType<FilmEntity> | null> {
+    return this.filmModel
+      .findOne()
+      .populate(['userId'])
+      .exec();
+  }
+
   public async find(): Promise<DocumentType<FilmEntity>[]> {
     return this.filmModel
       .find()
@@ -56,21 +63,34 @@ export default class FilmService implements FilmServiceInterface {
       .exec();
   }
 
-  public async incCommentCount(filmId: string): Promise<DocumentType<FilmEntity> | null> {
+  public async changeCommentsCount(filmId: string, rating: number): Promise<DocumentType<FilmEntity> | null> {
     return this.filmModel
       .findByIdAndUpdate(filmId, {'$inc': {
         commentCount: 1,
+        ratingSum: rating
       }}).exec();
   }
 
-  public async updateRating(filmId: string, rating: number): Promise<DocumentType<FilmEntity> | null> {
-    return this.filmModel
-      .findByIdAndUpdate(filmId, {rating: rating}).exec();
+  public async exists(documentId: string): Promise<boolean> {
+    return (await this.filmModel
+      .exists({_id: documentId})) !== null;
   }
 
-  public async exist(filmId: string): Promise<DocumentType<FilmEntity> | null> {
+  public async findToWatch(userId: string): Promise<DocumentType<FilmEntity>[]> {
     return this.filmModel
-      .findById(filmId).exec();
+      .find({usersToWatch: userId})
+      .populate(['userId'])
+      .exec();
+  }
+
+  public async updateByIdAddToWatch(filmId: string, userId: string): Promise<void> {
+    this.filmModel
+      .findByIdAndUpdate(filmId, {$addToSet: {usersToWatch: userId}}).exec();
+  }
+
+  public async updateByIdRemoveToWatch(filmId: string, userId: string): Promise<void> {
+    this.filmModel
+      .findByIdAndUpdate(filmId, {$pull: {usersToWatch: userId}}).exec();
   }
 
 }
