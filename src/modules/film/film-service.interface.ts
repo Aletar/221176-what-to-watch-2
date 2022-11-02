@@ -15,6 +15,7 @@ export interface FilmServiceInterface extends DocumentExistsInterface {
   findById(filmId: string): Promise<DocumentType<FilmEntity> | null>;
   findFirst(): Promise<DocumentType<FilmEntity> | null>;
   changeCommentsCount(filmId: string, rating: number): Promise<DocumentType<FilmEntity> | null>;
+  changeRating(filmId: string, rating: number): Promise<DocumentType<FilmEntity> | null>;
   exists(documentId: string): Promise<boolean>;
   updateByIdAddToWatch(filmId: string, userId: string): Promise<void>;
   updateByIdRemoveToWatch(filmId: string, userId: string): Promise<void>;

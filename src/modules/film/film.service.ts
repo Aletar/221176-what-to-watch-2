@@ -71,6 +71,13 @@ export default class FilmService implements FilmServiceInterface {
       }}).exec();
   }
 
+  public async changeRating(filmId: string, rating: number): Promise<DocumentType<FilmEntity> | null> {
+    return this.filmModel
+      .findByIdAndUpdate(filmId, {'$set': {
+        rating: rating
+      }}).exec();
+  }
+
   public async exists(documentId: string): Promise<boolean> {
     return (await this.filmModel
       .exists({_id: documentId})) !== null;

@@ -223,7 +223,10 @@ export default class FilmController extends Controller {
     const {params, body, user} = req;
 
     const comment = await this.commentService.create({...body, filmId: params.filmId, userId: user.id});
-    await this.filmService.changeCommentsCount(params.filmId, body.rating);
+    const film = await this.filmService.changeCommentsCount(params.filmId, body.rating);
+    if (film !== null) {
+      await this.filmService.changeRating(params.filmId, film.ratingSum / film.commentCount);
+    }
     this.created(res, fillDTO(CommentResponse, comment));
   }
 
