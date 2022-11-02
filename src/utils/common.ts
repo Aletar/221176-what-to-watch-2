@@ -12,7 +12,7 @@ import {DEFAULT_STATIC_IMAGES} from '../app/application.constant.js';
 export const createFilm = (row:string) => {
   const tokens = row.replace('\n', '').split('\t');
   const [title, description, postDate,
-    genre, year, rating, videoPreview,
+    genre, year, rating, video, videoPreview,
     starring, director, runTime, commentsCount,
     posterImage, backgroundImage, backgroundColor,
     name, email, avatar, password] = tokens;
@@ -25,6 +25,7 @@ export const createFilm = (row:string) => {
     year: Number.parseInt(year, 10),
     rating: Number.parseInt(rating, 10),
     videoPreview,
+    video,
     starring: starring.split(';').map((actorName) => actorName),
     director,
     runTime: Number.parseInt(runTime, 10),

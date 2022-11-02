@@ -25,69 +25,79 @@ Content-Type: application/json
 
 ## Проверка состояния пользователя
 GET http://localhost:9000/users/login HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM1ZTYxNWZiMzA5MmJmZTZiMTBmZTYxIiwiaWF0IjoxNjY3MTI5NzQ5LCJleHAiOjE2NjczMDI1NDl9.Vf5Lj9KUTxiuYsVeivGDxqn4M_tA30AkHHHNuL-xm4c
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM2Mjc2ZjZjYjViMDM4Mjg5ODJhMjg0IiwiaWF0IjoxNjY3Mzk3NTMzLCJleHAiOjE2Njc1NzAzMzN9.oK1JP16YGFeiVB_mV5uqi6x6tKQ0W3EnRM33BPNKonw
 Content-Type: application/json
 
+###
+
+## Выход
 DELETE http://localhost:9000/users/logout HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM1ZTYxNWZiMzA5MmJmZTZiMTBmZTYxIiwiaWF0IjoxNjY3MTI5NzQ5LCJleHAiOjE2NjczMDI1NDl9.Vf5Lj9KUTxiuYsVeivGDxqn4M_tA30AkHHHNuL-xm4c
 Content-Type: application/json
 
+###
 
 # Фильмы
 
 ## Создать фильм
 POST http://localhost:9000/films HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM1ZTYxNWZiMzA5MmJmZTZiMTBmZTYxIiwiaWF0IjoxNjY3MTI5NzQ5LCJleHAiOjE2NjczMDI1NDl9.Vf5Lj9KUTxiuYsVeivGDxqn4M_tA30AkHHHNuL-xm4c
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM2Mjc2ZjZjYjViMDM4Mjg5ODJhMjg0IiwiaWF0IjoxNjY3NDAzODE2LCJleHAiOjE2Njc1NzY2MTZ9.Ye5YHH4IFkmp9Jav9Rgkp1DDIqz73vmoLinQjaV-_xA
 Content-Type: application/json
 
 {
-  "title": "qwe@home.net",
-  "description": "qweqwe",
+  "title": "Благие знамения",
+  "description": "Фильм о падении блистательного психиатра, женившегося на богатой и красивой пациентке",
   "year": 2001,
   "genre": "Comedy",
   "videoPreview": "http://video.org/preview/123144532",
-  "videoPreview": "http://video.org/video/123144532",
+  "video": "http://video.org/video/123144532",
   "starring": ["Актер Первый", "Актер Второй", "Актер Третий"],
   "director": "Братья знаменитые режиссеры",
   "runTime": 180,
   "posterImage": "http://images.org/poster/123144532",
   "backgroundImage": "http://posters.org/background/123144532",
   "backgroundColor": "red",
-  "userId": {userID}
+  "userId": "636276f6cb5b03828982a284"
 }
 
 ###
 
 ## Получить список фильмов
-GET http://localhost:9000/films HTTP/1.1
+GET http://localhost:9000/films?limit=2 HTTP/1.1
+Content-Type: application/json
+
+###
+
+## Получить список фильмов
+GET http://localhost:9000/films?genre=Comedy HTTP/1.1
 Content-Type: application/json
 
 ###
 
 ## Получить детальную информацию о фильме
-GET http://localhost:9000/films/{filmid} HTTP/1.1
+GET http://localhost:9000/films/63627897a2d1591d94e3101a HTTP/1.1
 Content-Type: application/json
 
 ###
 
 ## Удалить фильм
-DELETE http://localhost:9000/films/{filmid} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM1ZTYxNWZiMzA5MmJmZTZiMTBmZTYxIiwiaWF0IjoxNjY3MTI5NzQ5LCJleHAiOjE2NjczMDI1NDl9.Vf5Lj9KUTxiuYsVeivGDxqn4M_tA30AkHHHNuL-xm4c
+DELETE http://localhost:9000/films/63627897a2d1591d94e3101a HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM2Mjc2ZjZjYjViMDM4Mjg5ODJhMjg0IiwiaWF0IjoxNjY3NDAwMTU4LCJleHAiOjE2Njc1NzI5NTh9.uipf1Zit8u0do_YN5LwXOWu-9Y12i5el6ZH6HZDufDM
 Content-Type: application/json
 
 ###
 
-PUT http://localhost:9000/films/{filmid} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM1ZTYxNWZiMzA5MmJmZTZiMTBmZTYxIiwiaWF0IjoxNjY3MTI5NzQ5LCJleHAiOjE2NjczMDI1NDl9.Vf5Lj9KUTxiuYsVeivGDxqn4M_tA30AkHHHNuL-xm4c
+PUT http://localhost:9000/films/63627897a2d1591d94e3101a HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM2Mjc2ZjZjYjViMDM4Mjg5ODJhMjg0IiwiaWF0IjoxNjY3Mzk4MTMyLCJleHAiOjE2Njc1NzA5MzJ9.p9SPuWPzbp_h88uXsPKYXAsTCVPTDAfzmGP4ubxpwYQ
 Content-Type: application/json
 
 {
-  "title": "qwe@home.net",
-  "description": "qweqwe",
+  "title": "Великий Гэтсби",
+  "description": "Фильм по одноименнорму роману Френсиса Скотта Физжеральда",
   "year": 2001,
   "genre": "Comedy",
   "videoPreview": "http://video.org/preview/123144532",
-  "videoPreview": "http://video.org/video/123144532",
+  "video": "http://video.org/video/123144532",
   "starring": ["Актер Первый", "Актер Второй", "Актер Третий"],
   "director": "Братья знаменитые режиссеры",
   "runTime": 180,
@@ -99,7 +109,7 @@ Content-Type: application/json
 ###
 
 ## Получить промо-фильм
-DELETE http://localhost:9000/films/promo HTTP/1.1
+GET http://localhost:9000/films/promo HTTP/1.1
 Content-Type: application/json
 
 ###
@@ -112,15 +122,15 @@ Content-Type: application/json
 ###
 
 ## Добавить фильм к просмотру
-POST http://localhost:9000/films/{filmId}/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM1ZTYxNWZiMzA5MmJmZTZiMTBmZTYxIiwiaWF0IjoxNjY3MTI5NzQ5LCJleHAiOjE2NjczMDI1NDl9.Vf5Lj9KUTxiuYsVeivGDxqn4M_tA30AkHHHNuL-xm4c
+POST http://localhost:9000/films/63627897a2d1591d94e3101a/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM2Mjc2ZjZjYjViMDM4Mjg5ODJhMjg0IiwiaWF0IjoxNjY3Mzk4MTMyLCJleHAiOjE2Njc1NzA5MzJ9.p9SPuWPzbp_h88uXsPKYXAsTCVPTDAfzmGP4ubxpwYQ
 Content-Type: application/json
 
 ###
 
 ## Удалить фильм из списка к просмотру
-POST http://localhost:9000/films/{filmId}/0 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM1ZTYxNWZiMzA5MmJmZTZiMTBmZTYxIiwiaWF0IjoxNjY3MTI5NzQ5LCJleHAiOjE2NjczMDI1NDl9.Vf5Lj9KUTxiuYsVeivGDxqn4M_tA30AkHHHNuL-xm4c
+POST http://localhost:9000/films/63627897a2d1591d94e3101a/0 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM2Mjc2ZjZjYjViMDM4Mjg5ODJhMjg0IiwiaWF0IjoxNjY3Mzk4MTMyLCJleHAiOjE2Njc1NzA5MzJ9.p9SPuWPzbp_h88uXsPKYXAsTCVPTDAfzmGP4ubxpwYQ
 Content-Type: application/json
 
 ###
@@ -128,17 +138,17 @@ Content-Type: application/json
 #Комментарии
 
 ## Добавить комментарий к фильму
-POST http://localhost:9000/films/{filmId}/comments HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM1ZTYxNWZiMzA5MmJmZTZiMTBmZTYxIiwiaWF0IjoxNjY3MTI5NzQ5LCJleHAiOjE2NjczMDI1NDl9.Vf5Lj9KUTxiuYsVeivGDxqn4M_tA30AkHHHNuL-xm4c
+POST http://localhost:9000/films/63627897a2d1591d94e3101a/comments HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InF3ZUBob21lLm5ldCIsImlkIjoiNjM2Mjc2ZjZjYjViMDM4Mjg5ODJhMjg0IiwiaWF0IjoxNjY3NDAwMTU4LCJleHAiOjE2Njc1NzI5NTh9.uipf1Zit8u0do_YN5LwXOWu-9Y12i5el6ZH6HZDufDM
 Content-Type: application/json
 
 {
   "text": "Хороший фильм, черт возьми!",
-  "rating": 9
+  "rating": 8
 }
 
 ###
 
 ## Получить все комментарии к фильму
-GET http://localhost:9000/films/{filmId}/comments HTTP/1.1
+GET http://localhost:9000/films/63627897a2d1591d94e3101a/comments HTTP/1.1
 Content-Type: application/json

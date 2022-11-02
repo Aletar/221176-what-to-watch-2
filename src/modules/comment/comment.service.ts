@@ -5,6 +5,8 @@ import {DocumentType, types} from '@typegoose/typegoose';
 import {CommentEntity} from './comment.entity.js';
 import {Component} from '../../types/component.types.js';
 import {LoggerInterface} from '../../common/logger/logger.interface.js';
+import {SortType} from '../../types/sort-type.enum.js';
+import {DEFAULT_COMMENT_COUNT} from './comment.constant.js';
 
 @injectable()
 export default class CommentService implements CommentServiceInterface {
@@ -23,14 +25,16 @@ export default class CommentService implements CommentServiceInterface {
   public async findById(commentId: string): Promise<DocumentType<CommentEntity> | null> {
     return this.commentModel
       .findById(commentId)
-      .populate(['userId'])
+      .populate(['userId', 'filmId'])
       .exec();
   }
 
   public async findByFilmId(filmId: string): Promise<DocumentType<CommentEntity>[] | null> {
     return this.commentModel
       .find({films: filmId})
-      .populate(['userId'])
+      .sort({createdAt: SortType.Down})
+      .limit(DEFAULT_COMMENT_COUNT)
+      .populate(['userId', 'filmId'])
       .exec();
   }
 

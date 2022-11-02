@@ -19,10 +19,16 @@ import { DocumentExistsMiddleware } from '../../common/middlewares/document-exis
 import CommentResponse from '../comment/response/comment.response.js';
 import { PrivateRouteMiddleware } from '../../common/middlewares/private-route.middleware.js';
 import CreateCommentDto from '../comment/dto/create-comment.dto.js';
+import { FilmGenre } from '../../types/film-genre.enum.js';
 
 type ParamsFilm = {
   filmId: string;
   status?: number
+}
+
+export type RequestQuery = {
+  limit?: number;
+  genre?: FilmGenre
 }
 
 @injectable()
@@ -54,6 +60,22 @@ export default class FilmController extends Controller {
     });
 
     this.addRoute({
+      path: '/promo',
+      method: HttpMethod.Get,
+      handler: this.getPromo
+    });
+
+    this.addRoute({
+      path: '/favourites',
+      method: HttpMethod.Get,
+      handler: this.getFavourites,
+      middlewares: [
+        new ValidateObjectIdMiddleware('filmId'),
+        new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId'),
+      ]
+    });
+
+    this.addRoute({
       path: '/:filmId',
       method: HttpMethod.Put,
       handler: this.update,
@@ -81,6 +103,16 @@ export default class FilmController extends Controller {
       method: HttpMethod.Get,
       handler: this.getDetailed,
       middlewares: [
+        new ValidateObjectIdMiddleware('filmId'),
+        new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId'),
+      ]
+    });
+
+    this.addRoute({
+      path: '/:filmId/comments',
+      method: HttpMethod.Post,
+      handler: this.createComment,
+      middlewares: [
         new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('filmId'),
         new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId'),
@@ -88,17 +120,10 @@ export default class FilmController extends Controller {
     });
 
     this.addRoute({
-      path: '/promo',
+      path: '/:filmId/comments',
       method: HttpMethod.Get,
-      handler: this.getPromo
-    });
-
-    this.addRoute({
-      path: '/favourites',
-      method: HttpMethod.Get,
-      handler: this.getFavourites,
+      handler: this.getComments,
       middlewares: [
-        new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('filmId'),
         new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId'),
       ]
@@ -115,30 +140,12 @@ export default class FilmController extends Controller {
       ]
     });
 
-    this.addRoute({
-      path: '/:filmId/comments',
-      method: HttpMethod.Get,
-      handler: this.getComments,
-      middlewares: [
-        new ValidateObjectIdMiddleware('filmId'),
-        new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId'),
-      ]
-    });
-
-    this.addRoute({
-      path: '/:filmId/comments',
-      method: HttpMethod.Get,
-      handler: this.getComments,
-      middlewares: [
-        new ValidateObjectIdMiddleware('filmId'),
-        new DocumentExistsMiddleware(this.filmService, 'Film', 'filmId'),
-      ]
-    });
-
   }
 
-  public async index(_req: Request, res: Response): Promise<void> {
-    const films = await this.filmService.find();
+  public async index(
+    {query}: Request<unknown, unknown, unknown, RequestQuery>,
+    res: Response): Promise<void> {
+    const films = await this.filmService.find(query.genre, query.limit);
     this.ok(res, fillDTO(FilmResponse, films));
   }
 

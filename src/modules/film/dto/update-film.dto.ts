@@ -1,5 +1,5 @@
 import { FilmGenre } from '../../../types/film-genre.enum.js';
-import {IsArray, IsDateString, IsEnum, IsInt, IsMongoId, Max, MaxLength, Min, MinLength} from 'class-validator';
+import {IsArray, IsEnum, IsInt, IsMongoId, Max, MaxLength, Min, MinLength} from 'class-validator';
 
 export default class UpdateFilmDto {
 

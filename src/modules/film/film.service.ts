@@ -7,6 +7,8 @@ import {FilmEntity} from './film.entity.js';
 import {Component} from '../../types/component.types.js';
 import {LoggerInterface} from '../../common/logger/logger.interface.js';
 import { FilmGenre } from '../../types/film-genre.enum.js';
+import { DEFAULT_FILM_COUNT } from './film.constant.js';
+import { SortType } from '../../types/sort-type.enum.js';
 
 @injectable()
 export default class FilmService implements FilmServiceInterface {
@@ -42,18 +44,22 @@ export default class FilmService implements FilmServiceInterface {
       .exec();
   }
 
-  public async find(): Promise<DocumentType<FilmEntity>[]> {
-    return this.filmModel
-      .find()
-      .populate(['userId'])
-      .exec();
-  }
+  public async find(genre?: FilmGenre, count?: number): Promise<DocumentType<FilmEntity>[]> {
+    const limit = count ?? DEFAULT_FILM_COUNT;
 
-  public async findByGenre(genre: FilmGenre): Promise<DocumentType<FilmEntity>[]> {
-    return this.filmModel
-      .find({genre: genre})
-      .populate(['userId'])
-      .exec();
+    return genre
+      ? this.filmModel
+        .find({genre: genre})
+        .sort({createdAt: SortType.Down})
+        .limit(limit)
+        .populate(['userId'])
+        .exec()
+      : this.filmModel
+        .find()
+        .sort({createdAt: SortType.Down})
+        .limit(limit)
+        .populate(['userId'])
+        .exec();
   }
 
   public async findById(filmId: string): Promise<DocumentType<FilmEntity> | null> {
