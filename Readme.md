@@ -42,6 +42,47 @@ git clone SSH-адрес_вашего_форка
 
 ### 4. Начинайте обучение!
 
+
+### 5. Запуск проекта
+
+> Установите зависимости:
+> `npm install`
+
+- Создайье в корне проекта файл `.env` и задайте переменные окружения (пример в .env.example):
+
+  - `DB_HOST` — адрес сервера
+  - `PORT` — порт подключения
+  - `DB_NAME` — наименование базы
+  - `DB_USER` — имя пользователя БД
+  - `DB_PASSWORD` — пароль пользователя БД
+  - `SALT`— "соль" для хеширования пароля
+  - `UPLOAD_DIRECTORY` - директория для загрузки файлов
+  - `JWT_SECRET` - секретное слово для подписи токена
+  - `STATIC_DIRECTORY_PATH` - директория для размещения статичных файлов
+  - `HOST` - имя хоста, на котором запущен сервис
+
+- Для работы необходима MongoDB(https://www.mongodb.com/try/download/community2)
+
+- Вариант с использованием docker (`docker-compose up -d`)
+  - mongodb
+  - mongodb-express
+
+---
+
+### 6. Сценарии
+**В `package.json` доступны следующие сценарии:**
+
+- `start` - запуск
+- `start:dev` - запуск c использованием пакета 'nodemon'
+- `build` - сборка
+- `lint` - запуск линтера
+- `compile`- компиляция кода
+- `clean`- очистка директории "dist"
+- `ts`- запуск пакета `ts-node`.
+- `mock:server` - запуск JSON-сервера
+
+---
+
 ---
 
 <a href="https://htmlacademy.ru/profession/fullstack"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/nodejs/logo-for-github-2.png"></a>

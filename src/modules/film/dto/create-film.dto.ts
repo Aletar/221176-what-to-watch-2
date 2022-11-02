@@ -1,5 +1,5 @@
 import { FilmGenre } from '../../../types/film-genre.enum.js';
-import {IsArray, IsDateString, IsEnum, IsInt, IsMongoId, Max, MaxLength, Min, MinLength} from 'class-validator';
+import {IsArray, IsEnum, IsInt, IsMongoId, Max, MaxLength, Min, MinLength} from 'class-validator';
 
 export default class CreateFilmDto {
 
@@ -11,9 +11,6 @@ export default class CreateFilmDto {
   @MaxLength(1024, {message: 'Maximum description length must be 1024'})
   public description!: string;
 
-  @IsDateString({}, {message: 'postDate must be valid ISO date'})
-  public postDate!: Date;
-
   @IsInt({message: 'Year must be an integer'})
   @Min(1890, {message: 'Minimum year is 1890'})
   @Max(2100, {message: 'Maximum year is 2100'})
@@ -24,6 +21,9 @@ export default class CreateFilmDto {
 
   @MaxLength(256, {message: 'Too short for field videoPreview'})
   public videoPreview!: string;
+
+  @MaxLength(256, {message: 'Too short for field videoPreview'})
+  public video!: string;
 
   @IsArray({message: 'Field starring must be an array'})
   public starring!: string[];

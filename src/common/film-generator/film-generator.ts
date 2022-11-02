@@ -35,6 +35,7 @@ export default class FilmGenerator implements FilmGeneratorInterface {
     }
     const rating = parseFloat((sum(ratingScores) / commentsCount).toFixed(1));
     const videoPreview = draw(this.mockData.videoPreviews);
+    const video = draw(this.mockData.video);
 
     const starringArray = [];
     for (let i = 0; i < random(1, 10); i++) {
@@ -53,7 +54,7 @@ export default class FilmGenerator implements FilmGeneratorInterface {
 
     return [
       title, description, postDate, genre, year,
-      rating, videoPreview, starring, director,
+      rating, videoPreview, video, starring, director,
       runTime, commentsCount, posterImage,
       backgroundImage, backgroundColor,
       name, email, avatar
