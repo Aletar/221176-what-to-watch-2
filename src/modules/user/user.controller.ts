@@ -12,31 +12,31 @@ import {fillDTO, createJWT} from '../../utils/common.js';
 import UserResponse from './response/user.response.js';
 import {ConfigInterface} from '../../common/config/config.interface.js';
 import LoginUserDto from './dto/login-user.dto.js';
-import {ValidateObjectIdMiddleware} from '../../common/middlewares/validate-objectid.middleware.js';
-import {UploadFileMiddleware} from '../../common/middlewares/upload-file.middleware.js';
 import LoggedUserResponse from './response/logged-user.response.js';
 import {JWT_ALGORITM} from './user.constant.js';
+import { ValidateDtoMiddleware } from '../../common/middlewares/validate-dto.middleware.js';
 
 @injectable()
 export default class UserController extends Controller {
   constructor(
     @inject(Component.LoggerInterface) logger: LoggerInterface,
+    @inject(Component.ConfigInterface) configService: ConfigInterface,
     @inject(Component.UserServiceInterface) private readonly userService: UserServiceInterface,
-    @inject(Component.ConfigInterface) private readonly configService: ConfigInterface,
   ) {
-    super(logger);
+    super(logger, configService);
     this.logger.info('Register routes for UserController…');
 
-    this.addRoute({path: '/register', method: HttpMethod.Post, handler: this.create});
-    this.addRoute({path: '/login', method: HttpMethod.Post, handler: this.login});
     this.addRoute({
-      path: '/:userId/avatar',
+      path: '/',
       method: HttpMethod.Post,
-      handler: this.uploadAvatar,
-      middlewares: [
-        new ValidateObjectIdMiddleware('userId'),
-        new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'avatar'),
-      ]
+      handler: this.create,
+      middlewares: [new ValidateDtoMiddleware(CreateUserDto)]
+    });
+    this.addRoute({
+      path: '/login',
+      method: HttpMethod.Post,
+      handler: this.login,
+      middlewares: [new ValidateDtoMiddleware(LoginUserDto)]
     });
     this.addRoute({
       path: '/login',
@@ -72,7 +72,7 @@ export default class UserController extends Controller {
   ): Promise<void> {
     const user = await this.userService.verifyUser(body, this.configService.get('SALT'));
 
-    if (! user) {
+    if (!user) {
       throw new HttpError(
         StatusCodes.UNAUTHORIZED,
         'Unauthorized',
@@ -89,19 +89,8 @@ export default class UserController extends Controller {
     this.ok(res, fillDTO(LoggedUserResponse, {email: user.email, token}));
   }
 
-  public async uploadAvatar(req: Request, res: Response) {
-    this.created(res, {
-      filepath: req.file?.path
-    });
-  }
-
   public async checkAuthenticate(req: Request, res: Response) {
     const user = await this.userService.findByEmail(req.user.email);
-
-    // Можно добавить проверку, что `findByEmail` действительно
-    // находит пользователя в базе. Если пользователи не удаляются,
-    // проверки можно избежать.
-
     this.ok(res, fillDTO(LoggedUserResponse, user));
   }
 }
