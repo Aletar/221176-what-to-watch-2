@@ -5,8 +5,10 @@ import { FilmGenre } from '../../types/film-genre.enum.js';
 import { FilmGeneratorInterface } from './film-generator.interface.js';
 import { random, draw, sum, uid } from 'radash';
 
-const FIRST_WEEK_DAY = 1;
-const LAST_WEEK_DAY = 7;
+enum WeekDay {
+  First = 1,
+  Last = 7
+}
 
 export default class FilmGenerator implements FilmGeneratorInterface {
   constructor(private readonly mockData: MockData) {}
@@ -14,7 +16,7 @@ export default class FilmGenerator implements FilmGeneratorInterface {
   public generate(): string {
     const title = draw(this.mockData.titles);
     const description = draw(this.mockData.descriptions);
-    const postDate = dayjs().subtract(random(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day').toISOString();
+    const postDate = dayjs().subtract(random(WeekDay.First, WeekDay.Last), 'day').toISOString();
     const genre = draw([
       FilmGenre.Comedy,
       FilmGenre.Crime,
